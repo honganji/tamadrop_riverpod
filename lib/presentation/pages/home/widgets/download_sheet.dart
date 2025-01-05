@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tamadrop_riverpod/application/usecase/playlist/playlist.dart';
+import 'package:tamadrop_riverpod/application/usecase/video/video_list.dart';
+import 'package:tamadrop_riverpod/presentation/funcs/my_snack_bar.dart';
 import 'package:tamadrop_riverpod/presentation/pages/home/widgets/my_text_field.dart';
 
 class DownloadSheet extends StatefulWidget {
@@ -65,24 +67,31 @@ class _DownloadSheetState extends State<DownloadSheet> {
             );
           }),
           const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              // downloadVideo();
-              textController.clear();
-              setState(() {
-                selectedOption = null;
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.primary,
-                width: 1,
+          Consumer(builder: (context, ref, child) {
+            final notifier = ref.watch(videoListProvider.notifier);
+            return ElevatedButton(
+              onPressed: () async {
+                if (textController.text.isEmpty) {
+                  mySnackBar(context, "Input a URL");
+                  return;
+                }
+                await notifier.downloadVideo(textController.text);
+                textController.clear();
+                setState(() {
+                  selectedOption = null;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                side: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1,
+                ),
+                shadowColor: Theme.of(context).colorScheme.inversePrimary,
+                elevation: 5,
               ),
-              shadowColor: Theme.of(context).colorScheme.inversePrimary,
-              elevation: 5,
-            ),
-            child: const Text("download"),
-          ),
+              child: const Text("download"),
+            );
+          }),
         ],
       ),
     );
