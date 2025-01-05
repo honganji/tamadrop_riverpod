@@ -77,6 +77,12 @@ class _DownloadSheetState extends State<DownloadSheet> {
                   mySnackBar(context, "Input a URL");
                   return;
                 }
+                final bool isDuplicate =
+                    await notifier.checkIsDuplicate(textController.text);
+                if (isDuplicate) {
+                  mySnackBar(context, "This video is already in the list");
+                  return;
+                }
                 await notifier.addVideo(textController.text, playlistId);
                 textController.clear();
                 setState(() {

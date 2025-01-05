@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tamadrop_riverpod/application/usecase/video/video_list.dart';
 import 'package:tamadrop_riverpod/presentation/pages/home/home_route.dart';
+import 'package:tamadrop_riverpod/presentation/pages/playlist/widgets/video_box.dart';
 
 class PlaylistPage extends HookConsumerWidget {
   const PlaylistPage(this.id, {super.key});
@@ -22,14 +23,14 @@ class PlaylistPage extends HookConsumerWidget {
         return Center(
           child: Column(
             children: [
-              Text('Playlist Page'),
-              Text('Playlist id: $id'),
-              Text('First video title: ${data.length}'),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Back'),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    final video = data[index];
+                    return VideoBox(index, video);
+                  },
+                ),
               ),
             ],
           ),

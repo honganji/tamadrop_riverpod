@@ -65,21 +65,39 @@ class VideoRepoImpl implements VideoRepoInterface {
   }
 
   @override
-  Future<void> updateVideo(Video video, String id) {
-    // TODO: implement updateVideo
-    throw UnimplementedError();
+  Future<void> updateVideo(Video video, String id) async {
+    print("update");
   }
 
   @override
-  Future<void> deleteVideo(String id) {
-    // TODO: implement deleteVideo
-    throw UnimplementedError();
+  Future<void> deleteVideo(String id) async {
+    List<Map<String, dynamic>> vpList = await db.query(
+      'playlist_videos',
+    );
+    await db.delete(
+      'videos',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    await db.delete(
+      'playlist_videos',
+      where: 'vid = ?',
+      whereArgs: [id],
+    );
+    vpList = await db.query(
+      'playlist_videos',
+    );
   }
 
   @override
-  Future<bool> checkIsDuplicate(String title) {
-    // TODO: implement checkIsDuplicate
-    throw UnimplementedError();
+  Future<bool> checkIsDuplicate(String title) async {
+    final List<Video> videoList = await getVideos();
+    for (Video video in videoList) {
+      if (video.title == title) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @override

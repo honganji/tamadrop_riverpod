@@ -4,6 +4,6 @@ abstract interface class VideoInterface {
   Future<void> addVideo(String url, String? pid);
   Future<void> updateVideo(String name, String id);
   Future<void> deleteVideo(String id);
-  Future<void> checkIsDuplicate(String name);
+  Future<bool> checkIsDuplicate(String name);
   Future<void> downloadVideo(String url);
 }

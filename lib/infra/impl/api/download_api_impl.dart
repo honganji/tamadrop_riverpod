@@ -76,7 +76,7 @@ class DownloadApiImpl implements DownloadApiInterface {
       throw Exception("No audio or video streams available for this video.");
     }
     streamAudioInfo = manifest.audioOnly.withHighestBitrate();
-    // TODO 画質を選べるようにする
+    // TODO enable to choose the quality of video
     streamVideoInfo = manifest.videoOnly.firstWhere(
       (stream) => stream.qualityLabel == '1080p',
       orElse: () => manifest.videoOnly.withHighestBitrate(),

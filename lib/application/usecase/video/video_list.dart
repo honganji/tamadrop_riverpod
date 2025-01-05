@@ -65,15 +65,22 @@ class VideoList extends _$VideoList implements VideoInterface {
   }
 
   @override
-  Future<void> deleteVideo(String id) {
-    // TODO: implement deleteVideo
-    throw UnimplementedError();
+  Future<void> deleteVideo(String id) async {
+    state = AsyncValue.loading();
+    await AsyncValue.guard(() async {
+      await repo.deleteVideo(id);
+      await getVideos();
+    });
   }
 
   @override
-  Future<void> checkIsDuplicate(String name) {
-    // TODO: implement checkIsDuplicate
-    throw UnimplementedError();
+  Future<bool> checkIsDuplicate(String name) async {
+    try {
+      return await repo.checkIsDuplicate(name);
+    } catch (e) {
+      print(e.toString());
+      return true;
+    }
   }
 
   @override
