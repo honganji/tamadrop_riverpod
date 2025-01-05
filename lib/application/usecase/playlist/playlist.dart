@@ -2,8 +2,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tamadrop_riverpod/application/usecase/playlist/playlist_interface.dart';
 import 'package:tamadrop_riverpod/domain/entity/playlist/playlist.dart';
-import 'package:tamadrop_riverpod/domain/interface/playlist_repo_interface.dart';
-import 'package:tamadrop_riverpod/infra/impl/playlist_repo_impl/playlist_repo_impl.dart';
+import 'package:tamadrop_riverpod/domain/interface/repository/playlist_repo_interface.dart';
+import 'package:tamadrop_riverpod/infra/impl/repository/playlist_repo_impl.dart';
 import 'package:tamadrop_riverpod/infra/service/sqlite/sqlite.dart';
 
 part 'playlist.g.dart';

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tamadrop_riverpod/application/usecase/playlist/playlist.dart';
+import 'package:tamadrop_riverpod/application/usecase/video/video_list.dart';
+import 'package:tamadrop_riverpod/presentation/funcs/my_snack_bar.dart';
 import 'package:tamadrop_riverpod/presentation/pages/home/widgets/my_text_field.dart';
 
 class DownloadSheet extends StatefulWidget {
@@ -14,6 +16,7 @@ class _DownloadSheetState extends State<DownloadSheet> {
   final textController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   int? selectedOption;
+  String? playlistId;
   @override
   void initState() {
     super.initState();
@@ -53,6 +56,7 @@ class _DownloadSheetState extends State<DownloadSheet> {
                   );
                 }).toList(),
                 onChanged: (int? newValue) {
+                  playlistId = data[newValue!].id;
                   setState(() {
                     selectedOption = newValue;
                   });
@@ -65,24 +69,37 @@ class _DownloadSheetState extends State<DownloadSheet> {
             );
           }),
           const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              // downloadVideo();
-              textController.clear();
-              setState(() {
-                selectedOption = null;
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.primary,
-                width: 1,
+          Consumer(builder: (context, ref, child) {
+            final notifier = ref.watch(videoListProvider.notifier);
+            return ElevatedButton(
+              onPressed: () async {
+                if (textController.text.isEmpty) {
+                  mySnackBar(context, "Input a URL");
+                  return;
+                }
+                final bool isDuplicate =
+                    await notifier.checkIsDuplicate(textController.text);
+                if (isDuplicate) {
+                  mySnackBar(context, "This video is already in the list");
+                  return;
+                }
+                await notifier.addVideo(textController.text, playlistId);
+                textController.clear();
+                setState(() {
+                  selectedOption = null;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                side: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1,
+                ),
+                shadowColor: Theme.of(context).colorScheme.inversePrimary,
+                elevation: 5,
               ),
-              shadowColor: Theme.of(context).colorScheme.inversePrimary,
-              elevation: 5,
-            ),
-            child: const Text("download"),
-          ),
+              child: const Text("download"),
+            );
+          }),
         ],
       ),
     );

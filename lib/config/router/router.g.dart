@@ -49,10 +49,15 @@ extension $HomeRouteExtension on HomeRoute {
 }
 
 extension $PlaylistRouteExtension on PlaylistRoute {
-  static PlaylistRoute _fromState(GoRouterState state) => PlaylistRoute();
+  static PlaylistRoute _fromState(GoRouterState state) => PlaylistRoute(
+        state.uri.queryParameters['id']!,
+      );
 
   String get location => GoRouteData.$location(
         '/playlist',
+        queryParams: {
+          'id': id,
+        },
       );
 
   void go(BuildContext context) => context.go(location);

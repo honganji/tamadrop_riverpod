@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tamadrop_riverpod/domain/entity/playlist/playlist.dart';
-import 'package:tamadrop_riverpod/domain/interface/playlist_repo_interface.dart';
+import 'package:tamadrop_riverpod/domain/interface/repository/playlist_repo_interface.dart';
 import 'package:uuid/uuid.dart';
 
 class PlaylistRepoImpl implements PlaylistRepoInterface {

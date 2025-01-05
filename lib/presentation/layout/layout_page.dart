@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tamadrop_riverpod/application/usecase/theme/theme.dart';
+import 'package:tamadrop_riverpod/presentation/theme/dark_theme.dart';
 
 class LayoutPage extends ConsumerWidget {
   const LayoutPage(this.child, {super.key});
@@ -9,8 +10,8 @@ class LayoutPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
     final themeNotifier = ref.watch(themeProvider.notifier);
+    final theme = ref.watch(themeProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tama Drop'),
@@ -18,7 +19,7 @@ class LayoutPage extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CupertinoSwitch(
-              value: themeNotifier.isDark(),
+              value: theme == darkTheme,
               onChanged: (value) {
                 themeNotifier.toggleTheme();
               },
