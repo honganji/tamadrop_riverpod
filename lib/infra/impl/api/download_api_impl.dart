@@ -36,15 +36,13 @@ class DownloadApiImpl implements DownloadApiInterface {
 
   @override
   Future<local.Video> downloadVideo() async {
-    // TODO replace with url variable
-    await _setup("https://www.youtube.com/watch?v=GQ3V50XoLOM");
+    await _setup(url);
     await getFileAndPath();
     await _writeIntoFile();
     await _closeFiles();
     await _mergeAudioAndVideo();
     await _deleteVideo();
     await _getThumbnail();
-    print('Downloaded video path: $outputFilePath');
     return local.Video(
       id: id,
       path: relativeVideoPath,
@@ -152,9 +150,8 @@ class DownloadApiImpl implements DownloadApiInterface {
   }
 
   Future<void> _deleteVideo() async {
-    // await audioFile.delete();
-    // await videoFile.delete();
-    print("audioFile: $audioFilePath, videoFile: $videoFilePath");
+    await audioFile.delete();
+    await videoFile.delete();
   }
 
   Future<void> _getThumbnail() async {

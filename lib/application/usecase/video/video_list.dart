@@ -20,18 +20,42 @@ class VideoList extends _$VideoList implements VideoInterface {
     state = AsyncValue.loading();
     db = ref.read(sqfliteProvider);
     repo = VideoRepoImpl(db: db);
-    return await repo.getVideos();
+    try {
+      return await repo.getVideos();
+    } catch (error, stack) {
+      state = AsyncValue.error(error, stack);
+      return [];
+    }
   }
 
   @override
   Future<void> getVideos() async {
-    print("getVideos");
+    state = AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      return await repo.getVideos();
+    });
   }
 
   @override
-  Future<void> addVideo(String name) {
-    // TODO: implement addVideo
-    throw UnimplementedError();
+  Future<void> getVideosByCategory(String pid) async {
+    // state = AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      return await repo.getVideosByCategory(pid);
+    });
+  }
+
+  @override
+  Future<void> addVideo(String url, String? pid) async {
+    state = AsyncValue.loading();
+    final DownloadApiInterface api = DownloadApiImpl(url);
+    final Video video = await api.downloadVideo();
+    await AsyncValue.guard(() async {
+      try {
+        return await repo.addVideo(video, pid);
+      } catch (e) {
+        print(e.toString());
+      }
+    });
   }
 
   @override
@@ -56,10 +80,5 @@ class VideoList extends _$VideoList implements VideoInterface {
   Future<void> downloadVideo(String url) {
     final DownloadApiInterface api = DownloadApiImpl(url);
     return api.downloadVideo();
-  }
-
-  @override
-  Future<void> getVideosByCategory(String pid) async {
-    print(pid + "getVideosByCategory");
   }
 }

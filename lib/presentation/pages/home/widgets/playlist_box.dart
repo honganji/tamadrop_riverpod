@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tamadrop_riverpod/config/router/router.dart';
 import 'package:tamadrop_riverpod/domain/entity/playlist/playlist.dart';
 import 'package:tamadrop_riverpod/presentation/pages/home/widgets/edit_alert.dart';
+import 'package:tamadrop_riverpod/presentation/pages/playlist/playlist_route.dart';
 
 class PlaylistBox extends StatelessWidget {
   final Playlist playlist;
@@ -10,11 +12,7 @@ class PlaylistBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Playlist: ${playlist.name}'),
-          ),
-        );
+        PlaylistRoute(playlist.id).go(context);
       },
       child: SizedBox(
         height: 60,

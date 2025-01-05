@@ -8,8 +8,8 @@ class Video with _$Video {
   const factory Video({
     required String id,
     required String path,
-    required DateTime createdAt,
-    required String thumbnailFilePath,
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+    @JsonKey(name: 'thumbnail_file_path') required String thumbnailFilePath,
     required String title,
     required int volume,
     required int length,

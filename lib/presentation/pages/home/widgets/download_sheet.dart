@@ -16,6 +16,7 @@ class _DownloadSheetState extends State<DownloadSheet> {
   final textController = TextEditingController();
   final FocusNode focusNode = FocusNode();
   int? selectedOption;
+  String? playlistId;
   @override
   void initState() {
     super.initState();
@@ -55,6 +56,7 @@ class _DownloadSheetState extends State<DownloadSheet> {
                   );
                 }).toList(),
                 onChanged: (int? newValue) {
+                  playlistId = data[newValue!].id;
                   setState(() {
                     selectedOption = newValue;
                   });
@@ -75,7 +77,7 @@ class _DownloadSheetState extends State<DownloadSheet> {
                   mySnackBar(context, "Input a URL");
                   return;
                 }
-                await notifier.downloadVideo(textController.text);
+                await notifier.addVideo(textController.text, playlistId);
                 textController.clear();
                 setState(() {
                   selectedOption = null;

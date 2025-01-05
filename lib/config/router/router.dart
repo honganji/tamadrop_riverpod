@@ -9,6 +9,7 @@ part 'router.g.dart';
 /// navigatorにアクセスするためのグローバル変数
 ///
 /// 特定のNavigatorウィジェットの状態にアクセスするために使用されます。
+/// TODO enable to get id from path
 final shellNavigatorKey = GlobalKey<NavigatorState>();
 
 @TypedShellRoute<MyShellRoute>(

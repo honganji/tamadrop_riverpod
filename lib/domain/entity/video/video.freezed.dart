@@ -22,7 +22,9 @@ Video _$VideoFromJson(Map<String, dynamic> json) {
 mixin _$Video {
   String get id => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'thumbnail_file_path')
   String get thumbnailFilePath => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   int get volume => throw _privateConstructorUsedError;
@@ -45,8 +47,8 @@ abstract class $VideoCopyWith<$Res> {
   $Res call(
       {String id,
       String path,
-      DateTime createdAt,
-      String thumbnailFilePath,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'thumbnail_file_path') String thumbnailFilePath,
       String title,
       int volume,
       int length});
@@ -118,8 +120,8 @@ abstract class _$$VideoImplCopyWith<$Res> implements $VideoCopyWith<$Res> {
   $Res call(
       {String id,
       String path,
-      DateTime createdAt,
-      String thumbnailFilePath,
+      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'thumbnail_file_path') String thumbnailFilePath,
       String title,
       int volume,
       int length});
@@ -185,8 +187,8 @@ class _$VideoImpl implements _Video {
   const _$VideoImpl(
       {required this.id,
       required this.path,
-      required this.createdAt,
-      required this.thumbnailFilePath,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'thumbnail_file_path') required this.thumbnailFilePath,
       required this.title,
       required this.volume,
       required this.length});
@@ -199,8 +201,10 @@ class _$VideoImpl implements _Video {
   @override
   final String path;
   @override
+  @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
+  @JsonKey(name: 'thumbnail_file_path')
   final String thumbnailFilePath;
   @override
   final String title;
@@ -255,7 +259,8 @@ abstract class _Video implements Video {
   const factory _Video(
       {required final String id,
       required final String path,
-      required final DateTime createdAt,
+      @JsonKey(name: 'created_at') required final DateTime createdAt,
+      @JsonKey(name: 'thumbnail_file_path')
       required final String thumbnailFilePath,
       required final String title,
       required final int volume,
@@ -268,8 +273,10 @@ abstract class _Video implements Video {
   @override
   String get path;
   @override
+  @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
+  @JsonKey(name: 'thumbnail_file_path')
   String get thumbnailFilePath;
   @override
   String get title;

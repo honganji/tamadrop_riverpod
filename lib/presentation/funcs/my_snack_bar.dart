@@ -5,8 +5,8 @@ void mySnackBar(
   String message,
 ) {
   ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text('Playlist already exists'),
+    SnackBar(
+      content: Text(message),
     ),
   );
 }
