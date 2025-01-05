@@ -59,17 +59,7 @@ class PlaylistBox extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  // final videoPlayerCubit = context.read<VideoPlayerCubit>();
-                  // await videoPlayerCubit.getCategorizedVideo(playlist.pid);
-                  // if (videoPlayerCubit.videoList.isNotEmpty) {
-                  //   playNotifier.value = true;
-                  // } else {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //     const SnackBar(
-                  //       content: Text('No video in the playlist'),
-                  //     ),
-                  //   );
-                  // }
+                  // TODO play video inside the playlist
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('No video in the playlist'),
