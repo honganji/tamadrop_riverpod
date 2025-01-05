@@ -34,7 +34,7 @@ class DBSetupApp extends StatelessWidget {
             overrides: [
               sqfliteProvider.overrideWithValue(snapshot.data!),
             ],
-            child: const App(),
+            child: App(),
           );
         }
       },
