@@ -6,7 +6,7 @@ import 'package:tamadrop_riverpod/infra/service/sqlite/sqlite.dart';
 import 'package:tamadrop_riverpod/presentation/app.dart';
 
 class DBSetupApp extends StatelessWidget {
-  const DBSetupApp({Key? key}) : super(key: key);
+  const DBSetupApp({super.key});
 
   @override
   Widget build(BuildContext context) {

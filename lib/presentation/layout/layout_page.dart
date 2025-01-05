@@ -9,7 +9,6 @@ class LayoutPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
     final themeNotifier = ref.watch(themeProvider.notifier);
     return Scaffold(
       appBar: AppBar(
