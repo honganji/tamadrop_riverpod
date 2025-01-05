@@ -20,7 +20,7 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Playlist {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   /// Serializes this Playlist to a JSON map.
@@ -38,7 +38,7 @@ abstract class $PlaylistCopyWith<$Res> {
   factory $PlaylistCopyWith(Playlist value, $Res Function(Playlist) then) =
       _$PlaylistCopyWithImpl<$Res, Playlist>;
   @useResult
-  $Res call({int id, String name});
+  $Res call({String id, String name});
 }
 
 /// @nodoc
@@ -63,7 +63,7 @@ class _$PlaylistCopyWithImpl<$Res, $Val extends Playlist>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,7 @@ abstract class _$$PlaylistImplCopyWith<$Res>
       __$$PlaylistImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name});
+  $Res call({String id, String name});
 }
 
 /// @nodoc
@@ -103,7 +103,7 @@ class __$$PlaylistImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -121,7 +121,7 @@ class _$PlaylistImpl implements _Playlist {
       _$$PlaylistImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String name;
 
@@ -160,14 +160,14 @@ class _$PlaylistImpl implements _Playlist {
 }
 
 abstract class _Playlist implements Playlist {
-  const factory _Playlist({required final int id, required final String name}) =
-      _$PlaylistImpl;
+  const factory _Playlist(
+      {required final String id, required final String name}) = _$PlaylistImpl;
 
   factory _Playlist.fromJson(Map<String, dynamic> json) =
       _$PlaylistImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get name;
 

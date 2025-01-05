@@ -8,7 +8,7 @@ part of 'playlist.dart';
 
 _$PlaylistImpl _$$PlaylistImplFromJson(Map<String, dynamic> json) =>
     _$PlaylistImpl(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as String,
       name: json['name'] as String,
     );
 
