@@ -59,12 +59,6 @@ class VideoList extends _$VideoList implements VideoInterface {
   }
 
   @override
-  Future<void> updateVideo(String name, String id) {
-    // TODO: implement updateVideo
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> deleteVideo(String id) async {
     state = AsyncValue.loading();
     await AsyncValue.guard(() async {

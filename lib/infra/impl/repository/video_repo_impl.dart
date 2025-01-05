@@ -65,11 +65,6 @@ class VideoRepoImpl implements VideoRepoInterface {
   }
 
   @override
-  Future<void> updateVideo(Video video, String id) async {
-    print("update");
-  }
-
-  @override
   Future<void> deleteVideo(String id) async {
     List<Map<String, dynamic>> vpList = await db.query(
       'playlist_videos',
