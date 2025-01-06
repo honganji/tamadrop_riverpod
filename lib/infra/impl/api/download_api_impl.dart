@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:ffmpeg_kit_flutter_audio/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_audio/return_code.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tamadrop_riverpod/application/usecase/progress/progress.dart';
 import 'package:tamadrop_riverpod/domain/entity/video/video.dart' as local;
 import 'package:tamadrop_riverpod/domain/interface/api/download_api_interface.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -10,8 +12,6 @@ import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 
 class DownloadApiImpl implements DownloadApiInterface {
-  DownloadApiImpl(this.url);
-  final String url;
   late YoutubeExplode yt;
   late Video video;
   late StreamManifest manifest;
@@ -35,10 +35,10 @@ class DownloadApiImpl implements DownloadApiInterface {
   late String relativeVideoPath;
 
   @override
-  Future<local.Video> downloadVideo() async {
+  Future<local.Video> downloadVideo(String url, Progress notifier) async {
     await _setup(url);
     await getFileAndPath();
-    await _writeIntoFile();
+    await _writeIntoFile(notifier);
     await _closeFiles();
     await _mergeAudioAndVideo();
     await _deleteVideo();
@@ -102,7 +102,7 @@ class DownloadApiImpl implements DownloadApiInterface {
     videoFile = File(videoFilePath);
   }
 
-  Future<void> _writeIntoFile() async {
+  Future<void> _writeIntoFile(Progress notifier) async {
     audioFileStream = audioFile.openWrite();
     videoFileStream = videoFile.openWrite();
 
@@ -112,19 +112,16 @@ class DownloadApiImpl implements DownloadApiInterface {
 
     await for (var data in audioStream) {
       downloadedData += data.length;
-      // TODO Track the progress of downloading audio
-      // progressCubit.updateProgress(downloadedData / totalData * 100);
+      notifier.update(downloadedData / totalData * 100);
       audioFileStream.add(data);
     }
 
     await for (var data in videoStream) {
       downloadedData += data.length;
-      // TODO Track the progress of downloading video
-      // progressCubit.updateProgress(downloadedData / totalData * 100);
+      notifier.update(downloadedData / totalData * 100);
       videoFileStream.add(data);
     }
-    // TODO reset the progress
-    // progressCubit.updateProgress(0);
+    notifier.reset();
   }
 
   Future<void> _closeFiles() async {

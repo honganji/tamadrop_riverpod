@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tamadrop_riverpod/application/usecase/progress/progress.dart';
 import 'package:tamadrop_riverpod/application/usecase/video/video_interface.dart';
 import 'package:tamadrop_riverpod/domain/entity/video/video.dart';
 import 'package:tamadrop_riverpod/domain/interface/api/download_api_interface.dart';
@@ -47,8 +48,9 @@ class VideoList extends _$VideoList implements VideoInterface {
   @override
   Future<void> addVideo(String url, String? pid) async {
     state = AsyncValue.loading();
-    final DownloadApiInterface api = DownloadApiImpl(url);
-    final Video video = await api.downloadVideo();
+    final progressNotifier = ref.read(progressProvider.notifier);
+    final DownloadApiInterface api = DownloadApiImpl();
+    final Video video = await api.downloadVideo(url, progressNotifier);
     await AsyncValue.guard(() async {
       try {
         return await repo.addVideo(video, pid);
@@ -56,6 +58,7 @@ class VideoList extends _$VideoList implements VideoInterface {
         print(e.toString());
       }
     });
+    state = AsyncValue.data([]);
   }
 
   @override
@@ -75,11 +78,5 @@ class VideoList extends _$VideoList implements VideoInterface {
       print(e.toString());
       return true;
     }
-  }
-
-  @override
-  Future<void> downloadVideo(String url) {
-    final DownloadApiInterface api = DownloadApiImpl(url);
-    return api.downloadVideo();
   }
 }
