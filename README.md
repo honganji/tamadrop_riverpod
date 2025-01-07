@@ -1,16 +1,118 @@
-# tamadrop_riverpod
+<p align="center">
+  <h1>Tamadrop Riverpod</h1>
+</p>
 
-A new Flutter project.
+<p align="center">
+  <br />
+  <img width="100" src="./assets/images/tamadrop_icon.jpeg" alt="Tamadrop Logo" width="400" height="100">
+  <br/>
+  <br />
+  <p align="center">
+<img src="https://img.shields.io/badge/Flutter-3.24.3-blue?logo=flutter"/>
+<img src="https://img.shields.io/badge/Dart-3.5.3-blue?logo=dart"/>
+</p>
 
-## Getting Started
+<br/>
 
-This project is a starting point for a Flutter application.
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
 
-A few resources to get you started if this is your first Flutter project:
+<br/>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<details>
+  <summary style="font-size: 2em;">目次</summary>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [概要](#概要)
+- [作成背景](#作成背景)
+- [機能](#機能)
+- [技術的工夫](#技術的工夫)
+- [開発の始め方](#開発の始め方)
+
+</details>
+
+<br>
+
+# 概要
+
+このアプリケーションでは、Youtube の URL を元に動画を Android または iOS のデバイスにダウンロードしてオフラインで視聴することができます。
+
+# 作成背景
+
+Youtube の動画をダウンロードするアプリをいくつか使ったことがありますが、以下のような弊害がありました。
+
+- 途中で広告が流れて、視聴が止まる
+- ダウンロードが遅い
+- ダウンロードしたはずの動画が消えている
+- ダウンロードするまでの手順が煩雑
+
+このような状況から、シンプルでストレスのないダウンロードアプリを作ろうと決心しました。
+
+# 機能
+
+## ダウンロード機能
+
+Youtube の動画 URL をコピーペーストするだけで、動画をダウンロードすることができます。また、ダウンロードの進捗も確認することができます。
+
+不要となった動画は削除できます。
+
+## プレイリスト仕分け機能
+
+ご自身でプレイリストを作成し、好きなプレイリストに分けてダウンロードすることができます。
+
+プレイリストの編集と不要となったプレイリストは削除も可能です。
+
+## 動画視聴機能
+
+ダウンロードした動画をオフラインで視聴できます。
+
+# 技術的工夫
+
+## Riverpod を用いた状態管理
+
+本プロジェクトでは Riverpod を用いて状態を管理しています。これによって UI 部分とロジックの部分を分離することができ保守性を高めることができます。
+
+riverpod_generator などのパッケージを用いて積極的にコードの自動生成を行い、効率的かつ必要な機能を取り入れられるような開発ができるようにしました。
+
+## go_router_builder を使った、安全なページ遷移
+
+多くのプロジェクトでは go_router を使ってルーティングを実装されていると思います。しかし、URL に直接パラメータを与える時に型安全が保証できないという問題があります。
+
+これを解消するために、go_router_builder というパッケージを使いました。これによって、ページ遷移をする際にパラメータの型安全性を保証できるようになりました。
+
+加えて、ページ遷移の際に URL を直接貼り付ける必要がないためヒューマンエラーも減らすことができます。
+
+## レイヤードアーキテクチャを採用した設計
+
+本プロジェクトでは、レイヤードアーキテクチャに従って大きく以下の４つのレイヤーにコードを分類して作成しました。
+
+- presentation: UI を処理
+- application: UI の状態管理＋ユースケースの処理
+- domain: データのモデル定義＋ application と infrastructure の仲介をするインターフェースの定義
+- infrastructure: 外部サービスや DB との具体的なやりとりを担当
+
+このように分けることで保守性と拡張性を向上させています。
+
+また、依存性の逆転の原則を守ることで変更点を減らし、テストをしやすい環境を揃えています。
+
+# 開発の始め方
+
+本プロジェクトには Makefile を用意しているので、make コマンドを実行することでスムースな開発ができます。
+
+主に以下のようなコマンドを開発で用います。
+
+自動コードの生成
+
+```
+make gen
+```
+
+全ての自動生成ファイルを再生成
+
+```
+make gen_all
+```
+
+エミュレータでアプリを起動
+
+```
+make run_dev
+```
